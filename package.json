@@ -1,0 +1,79 @@
+{
+  "name": "@irim/cli-base",
+  "version": "1.0.0",
+  "description": "cli-base",
+  "repository": {
+    "type": "git",
+    "url": "git@git.code.tencent.com:berry/cli-base.git"
+  },
+  "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "lint": "eslint --fix --ext .js,.ts ./src",
+    "build:lib": "tsc --outDir lib --module CommonJS --target ES2018",
+    "build:esm": "tsc --outDir esm --module ES6 --target ES2018",
+    "build": "npm run build:lib && npm run build:esm",
+    "prebuild": "npm run lint && npm run clear",
+    "clear": "rm -rf lib esm types",
+    "test": "jest --config=config/jest.config.js",
+    "test:watch": "jest --config=config/jest.config.js --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "author": {
+    "name": "Pluto",
+    "email": "huarse@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "Pluto",
+      "email": "huarse@gmail.com"
+    }
+  ],
+  "license": "BSD-3-Clause",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^6.0.0",
+    "dateformat": "^3.0.3",
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.3",
+    "ora": "^5.0.0",
+    "properties": "^1.2.1",
+    "single-line-log": "^1.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@commitlint/cli": "~9.1.2",
+    "@commitlint/config-conventional": "~9.1.2",
+    "@types/fs-extra": "^9.0.1",
+    "@types/inquirer": "^7.3.0",
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.0.27",
+    "@typescript-eslint/eslint-plugin": "~3.9.0",
+    "@typescript-eslint/parser": "~3.9.0",
+    "eslint": "~7.7.0",
+    "husky": "~4.2.5",
+    "jest": "^26.4.0",
+    "typescript": "^3.9.7"
+  },
+  "peerDependencies": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "cli-base"
+  ],
+  "files": [
+    "lib",
+    "esm",
+    "dist",
+    "types"
+  ]
+}

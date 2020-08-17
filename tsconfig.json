@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "CommonJS",
+    "allowJs": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "outDir": "lib",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node"
+  },
+  "include": ["./src/"],
+  "exclude": ["node_modules"],
+}

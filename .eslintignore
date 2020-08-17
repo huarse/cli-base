@@ -1,0 +1,11 @@
+build/
+dist/
+esm/
+lib/
+coverage/
+test/
+node_modules/
+**/*.min.js
+**/*-min.js
+*.tpl
+*.bak
