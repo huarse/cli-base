@@ -1,7 +1,7 @@
 {
   "name": "@irim/cli-base",
   "version": "1.0.0",
-  "description": "cli-base",
+  "description": "Base Module for Command Line Tools",
   "repository": {
     "type": "git",
     "url": "git@git.code.tencent.com:berry/cli-base.git"
@@ -14,6 +14,7 @@
     "build:esm": "tsc --outDir esm --module ES6 --target ES2018",
     "build": "npm run build:lib && npm run build:esm",
     "prebuild": "npm run lint && npm run clear",
+    "dev": "tsc --outDir lib --module CommonJS --target ES2018 --watch",
     "clear": "rm -rf lib esm types",
     "test": "jest --config=config/jest.config.js",
     "test:watch": "jest --config=config/jest.config.js --watch",
