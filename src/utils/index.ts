@@ -7,4 +7,3 @@ export * from './parser';
 export * from './string';
 export * from './timer';
 export * from './interaction';
-export * from './shell';
