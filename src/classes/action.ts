@@ -37,7 +37,6 @@ export default abstract class Action<OptionType extends any> extends EventEmitte
 
   /**
    * 执行 action
-   * @alias exec
    * @param config 执行 action 时传入的局部配置，在项目中即为 fe.config.js
    */
   abstract async run(config?: Record<string, any>): Promise<any>;

@@ -4,7 +4,7 @@
 ![license](https://img.shields.io/npm/l/@irim/cli-base)
 ![downloads](https://img.shields.io/npm/dw/@irim/cli-base)
 
-<!-- 一句话描述 -->
+Node Cli 基础方法库
 
 ## Getting Started
 
@@ -19,14 +19,41 @@ print('debug', 'hello', 'world');
 
 ## API
 
-### 1. `BaseAction` 基础 Action 类，所有的插件必须继承此抽象类
+### 1. `BaseAction` 基础 Action 类，所有的 fe-cli 插件必须继承此抽象类
+
+BaseAction 的定义：
+
+```ts
+abstract class Action<OptionType extends any> extends EventEmitter {
+  // 由具体的继承插件去实现，初始化前会执行此静态方法，
+  // 一般在此方法中注册 options 选项
+  static register(program: Command): void;
+
+  /** 当前命令的选项值，必须先在 `static register` 中调用 `program.option()` 注册才能生效 */
+  options: Record<string, OptionType>;
+
+  /** 额外参数，如 `$ fe aaa bbb ccc` 的额外参数就是 `['bbb', 'ccc']` */
+  args: string[];
+
+  // fe-cli 会自动初始化实例，并传入当前的 program 对象
+  constructor(program: Command);
+
+  /**
+     * 执行 action，此方法必须由被继承的类实现
+     * @param config 执行 action 时传入的局部配置，在项目中即为 fe.config.js
+     */
+    abstract run(config?: Record<string, any>): Promise<any>;
+}
+```
+
+扩展 Action 示例：
 
 ```ts
 class CustomAction extends BaseAction<string> {
-  /**
-   * 此方法会被自动调用，必须实现此方法
-   * @param config 执行 action 时传入的局部配置，在项目中即为 fe.config.js
-   */ 
+  static register(program: Command) {
+    program.option('-f, --foo [value]', '选项的描述', '[可选]默认值');
+  }
+
   async run(config?: Record<string, any>) {
     console.log('> run CustomAction', this.args, this.options);
   }
@@ -40,31 +67,25 @@ class CustomAction extends BaseAction<string> {
 
 | 属性名   | 描述                | 类型      |
 | -------- | ------------------- | --------- |
-| HOMEPATH | 用户目录            | `string`  |
+| HOMEPATH | 用户 home 目录      | `string`  |
 | IS_WIN   | 是否是 windows 系统 | `boolean` |
 
-### 3. utils 常用的一些方法
+### 3. utils 一些常用的方法
 
 | 方法名          | 描述                                 | 参数定义                                                                              | 返回值                         |
 | --------------- | ------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------ |
-| getProgressStr  | 返回一个进度条 string                | `recent: number, total?: number, label?: string`                                      | `string`                       |
-| progressBar     | alias for getProgressStr             | 同 getProgressStr                                                                     | `string`                       |
-| logger          | console.log                          | `...args: BaseType[]`                                                                 | `void`                         |
+| progressBar     | 返回一个进度条 string                | `recent: number, total?: number, label?: string`                                      | `string`                       |
 | print           | 带颜色级别的 console.log             | `type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]`                  | `void`                         |
 | printJSON       | 打印单层的 JSON                      | `json: Record<string, BaseType>`                                                      | `void`                         |
 | sleep           | 睡眠 xx 毫秒                         | `millseconds: number`                                                                 | `Promise<void>`                |
 | parseProperties | 解析 .properties 文件，返回一个 JSON | `file: string`                                                                        | `Promise<Record<string, any>>` |
 | parseValue      | 从对象中解析出想要的值               | `data: Record<string, any> = {}, key: string`                                         | `any`                          |
 | templateRender  | 最简单的模板渲染                     | `tpl: string, data: Record<string, any> = {}`                                         | `string`                       |
-| render          | alias for templateRender             | 同 templateRender                                                                     | `string`                       |
 | confirm         | node 控制台二次确认                  | `message: string, defaultValue = false`                                               | `Promise<boolean>`             |
 | select          | node 控制台用户选择                  | `message: string, options: SelectOptions[] | string[], defaultValue: string | number` | `Promise<string>`              |
-| check           | alias for select                     | 同 select                                                                             | `Promise<string>`              |
-| prompt          | node 控制台用户输入                  | `message: string, defaultValue?: string, required = false`                            | `Promise<string>`              |
-| input           | alias for prompt                     | 同 prompt                                                                             | `Promise<string>`              |
+| input           | node 控制台用户输入                  | `message: string, defaultValue?: string, required = false`                            | `Promise<string>`              |
 | password        | node 控制台密码输入                  | `message: string, defaultValue?: string, required = false`                            | `Promise<string>`              |
-| holding         | 进入等待状态，输入回车继续           | `tips = '按回车继续...'`                                                              | `Promise<boolean>`             |
-| waiting         | alias for holding                    | 同 holding                                                                            | `Promise<boolean>`             |
+| holding         | node 控制台进入等待状态，按回车继续  | `tips = '按回车继续...'`                                                              | `Promise<boolean>`             |
 
 #### 扩展的类型定义
 
@@ -79,15 +100,12 @@ export type BaseType = string | number | boolean | symbol;
 
 | 方法名          | 描述                                                      | 参数定义                                                                                        | 返回值                   |
 | --------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------ |
-| fileIterator    | 遍历文件目录，执行 callback                               | 见下文                                                                                          | `Promise<any>`           |
-| iterator        | alias for  fileIterator                                   | 同 fileIterator                                                                                 | `Promise<any>`           |
-| dirSyncIterator | 遍历文件目录，同步到目标目录，并对每一个文件执行 callback | 见下文                                                                                          | `Promise<any>`           |
-| getFileCount    | 计目录中的文件数量                                        | `src: string, exclude?: RegExp`                                                                 | `Promise<number>`        |
-| count           | alias for getFileCount                                    | 同 getFileCount                                                                                 | `Promise<number>`        |
-| copyDir         | 复制文件目录                                              | `options: OptionShape`                                                                          | `Promise<any>`           |
-| clearDir        | 清空目录                                                  | `options: ClearOptions`                                                                         | `Promise<boolean>`       |
+| fileIterator    | 遍历目录文件，执行 callback                               | 见下文                                                                                          | `Promise<any>`           |
+| dirSyncIterator | 遍历目录文件，同步到目标目录，并对每一个文件执行 callback | 见下文                                                                                          | `Promise<any>`           |
+| getFileCount    | 统计目录中的文件数量                                      | `src: string, exclude?: RegExp`                                                                 | `Promise<number>`        |
+| copyDir         | 逐个复制目录中的文件                                      | `options: OptionShape`                                                                          | `Promise<any>`           |
+| clearDir        | 清空目录(有二次确认)                                      | `options: ClearOptions`                                                                         | `Promise<boolean>`       |
 | findInFolder    | 从目录中查找内容符合条件的文件                            | `src: string, callback: (filePath: string, content: string) => boolean, options: SearchOptions` | `Promise<SearchResult[]` |
-| search          | alias for findInFolder                                    | 同 findInFolder                                                                                 | 同 findInFolder          |
 
 #### 扩展的类型定义
 
@@ -170,6 +188,7 @@ export interface SearchResult {
 
 <!-- - **version**: change logs -->
 - **1.0.0** 发布 1.0 版本，整合并优化 已有能力
+- **1.0.4** 优化文档，迁移代码仓库
 
 ## LICENSE
 
