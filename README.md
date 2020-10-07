@@ -39,10 +39,10 @@ abstract class Action<OptionType extends any> extends EventEmitter {
   constructor(program: Command);
 
   /**
-     * 执行 action，此方法必须由被继承的类实现
-     * @param config 执行 action 时传入的局部配置，在项目中即为 fe.config.js
-     */
-    abstract run(config?: Record<string, any>): Promise<any>;
+   * 执行 action，此方法必须由被继承的类实现
+   * @param config 执行 action 时传入的局部配置，在项目中即为 fe.config.js
+   */
+  abstract run(config?: Record<string, any>): Promise<any>;
 }
 ```
 
