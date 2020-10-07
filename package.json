@@ -4,7 +4,7 @@
   "description": "Base Module for Command Line Tools",
   "repository": {
     "type": "git",
-    "url": "git@git.code.tencent.com:berry/cli-base.git"
+    "url": "git@github.com:huarse/cli-base.git"
   },
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
