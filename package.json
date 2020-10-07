@@ -21,12 +21,12 @@
     "prepublishOnly": "npm run build"
   },
   "author": {
-    "name": "Pluto",
+    "name": "CAIHUAZHI",
     "email": "huarse@gmail.com"
   },
   "maintainers": [
     {
-      "name": "Pluto",
+      "name": "CAIHUAZHI",
       "email": "huarse@gmail.com"
     }
   ],
