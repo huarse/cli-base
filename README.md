@@ -77,9 +77,7 @@ class CustomAction extends BaseAction<string> {
 | progressBar     | 返回一个进度条 string                | `recent: number, total?: number, label?: string`                                      | `string`                       |
 | print           | 带颜色级别的 console.log             | `type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]`                  | `void`                         |
 | printJSON       | 打印单层的 JSON                      | `json: Record<string, BaseType>`                                                      | `void`                         |
-| sleep           | 睡眠 xx 毫秒                         | `millseconds: number`                                                                 | `Promise<void>`                |
 | parseProperties | 解析 .properties 文件，返回一个 JSON | `file: string`                                                                        | `Promise<Record<string, any>>` |
-| parseValue      | 从对象中解析出想要的值               | `data: Record<string, any> = {}, key: string`                                         | `any`                          |
 | templateRender  | 最简单的模板渲染                     | `tpl: string, data: Record<string, any> = {}`                                         | `string`                       |
 | confirm         | node 控制台二次确认                  | `message: string, defaultValue = false`                                               | `Promise<boolean>`             |
 | select          | node 控制台用户选择                  | `message: string, options: SelectOptions[] | string[], defaultValue: string | number` | `Promise<string>`              |
