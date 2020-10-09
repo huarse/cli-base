@@ -1,4 +1,4 @@
-# cli-base
+# CLI BASE TOOLS
 
 ![version](https://img.shields.io/npm/v/@irim/cli-base)
 ![license](https://img.shields.io/npm/l/@irim/cli-base)
