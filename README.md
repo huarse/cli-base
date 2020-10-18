@@ -11,7 +11,7 @@ Node Cli 基础方法库
 - `$ npm install @irim/cli-base --save`
 
 ```ts
-import { BaseAction, consts, utils, files } from '@irim/cli-base';
+import { consts, utils, files } from '@irim/cli-base';
 const { print } = utils;
 
 print('debug', 'hello', 'world');
@@ -19,58 +19,14 @@ print('debug', 'hello', 'world');
 
 ## API
 
-### 1. `BaseAction` 基础 Action 类，所有的 fe-cli 插件必须继承此抽象类
-
-BaseAction 的定义：
-
-```ts
-abstract class Action<OptionType extends any> extends EventEmitter {
-  // 由具体的继承插件去实现，初始化前会执行此静态方法，
-  // 一般在此方法中注册 options 选项
-  static register(program: Command): void;
-
-  /** 当前命令的选项值，必须先在 `static register` 中调用 `program.option()` 注册才能生效 */
-  options: Record<string, OptionType>;
-
-  /** 额外参数，如 `$ fe aaa bbb ccc` 的额外参数就是 `['bbb', 'ccc']` */
-  args: string[];
-
-  // fe-cli 会自动初始化实例，并传入当前的 program 对象
-  constructor(program: Command);
-
-  /**
-   * 执行 action，此方法必须由被继承的类实现
-   * @param config 执行 action 时传入的局部配置，在项目中即为 fe.config.js
-   */
-  abstract run(config?: Record<string, any>): Promise<any>;
-}
-```
-
-扩展 Action 示例：
-
-```ts
-class CustomAction extends BaseAction<string> {
-  static register(program: Command) {
-    program.option('-f, --foo [value]', '选项的描述', '[可选]默认值');
-  }
-
-  async run(config?: Record<string, any>) {
-    console.log('> run CustomAction', this.args, this.options);
-  }
-}
-```
-
-- `this.args: string[]` 额外参数，如 `$ fe aaa bbb ccc` 的额外参数就是 `['bbb', 'ccc']`
-- `this.options: Record<string, OptionType>` 当前命令的选项值，必须先在 `static register` 中调用 `program.option()` 注册才能生效
-
-### 2. consts 静态常量
+### 1. consts 静态常量
 
 | 属性名   | 描述                | 类型      |
 | -------- | ------------------- | --------- |
 | HOMEPATH | 用户 home 目录      | `string`  |
 | IS_WIN   | 是否是 windows 系统 | `boolean` |
 
-### 3. utils 一些常用的方法
+### 2. utils 一些常用的方法
 
 | 方法名          | 描述                                 | 参数定义                                                                              | 返回值                         |
 | --------------- | ------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------ |
@@ -94,7 +50,7 @@ class CustomAction extends BaseAction<string> {
 export type BaseType = string | number | boolean | symbol;
 ```
 
-### 4. files 文件操作相关的常用方法
+### 3. files 文件操作相关的常用方法
 
 | 方法名          | 描述                                                      | 参数定义                                                                                        | 返回值                   |
 | --------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------ |
@@ -187,6 +143,7 @@ export interface SearchResult {
 <!-- - **version**: change logs -->
 - **1.0.0** 发布 1.0 版本，整合并优化 已有能力
 - **1.0.4** 优化文档，迁移代码仓库
+- **1.1.0** 去掉 `BaseAction` ，简化架构
 
 ## LICENSE
 
