@@ -5,7 +5,6 @@
 import * as all from '../src';
 
 test('#all modules', () => {
-  expect(Reflect.has(all, 'BaseAction')).toBeTruthy();
   expect(Reflect.has(all, 'consts')).toBeTruthy();
   expect(Reflect.has(all, 'utils')).toBeTruthy();
   expect(Reflect.has(all, 'files')).toBeTruthy();
