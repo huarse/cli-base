@@ -4,6 +4,7 @@
 
 import inquirer from 'inquirer';
 import chalk from 'chalk';
+import { print } from './print';
 
 /**
  * node 控制台二次确认
@@ -28,11 +29,15 @@ export async function confirm(message: string, defaultValue = false): Promise<bo
  * @alias input
  * @param message 提示信息
  * @param defaultValue 默认值
- * @param required 是否必填，默认 false
+ * @param validator 校验规则，如果是 boolean，则表示必填
  * @example
  * const username = await prompt('请输入用户名：');
  */
-export async function prompt(message: string, defaultValue?: string, required = false): Promise<string> {
+export async function prompt(
+  message: string,
+  defaultValue?: string,
+  validator: boolean | ((v: string) => (Promise<boolean | Error> | boolean | Error)) = false
+): Promise<string> {
   const result = await inquirer.prompt([{
     type: 'input',
     name: 'value',
@@ -40,8 +45,24 @@ export async function prompt(message: string, defaultValue?: string, required = 
     default: defaultValue,
   }]);
 
-  if (!result.value && required) {
+  if (!validator) {
+    return result.value;
+  }
+
+  if (validator === true && !result.value) {
     return await prompt(chalk.red(message), defaultValue, true);
+  }
+
+  if (typeof validator === 'function') {
+    const flag = await validator(result.value);
+    if (flag === false) {
+      print('error', `${result.value} 校验失败，请重新输入！`);
+      return await prompt(chalk.red(message), defaultValue, true);
+    }
+    if (flag instanceof Error) {
+      print('error', flag.message);
+      return await prompt(chalk.red(message), defaultValue, true);
+    }
   }
 
   return result.value;
@@ -53,11 +74,15 @@ export const input = prompt;
  * node 控制台用户输入
  * @param message 提示信息
  * @param defaultValue 默认值
- * @param required 是否必填，默认 false
+ * @param validator 校验规则，如果是 boolean，则表示必填
  * @example
  * const username = await password('请输入密码：');
  */
-export async function password(message: string, defaultValue?: string, required = false): Promise<string> {
+export async function password(
+  message: string,
+  defaultValue?: string,
+  validator: boolean | ((v: string) => (Promise<boolean | Error> | boolean | Error)) = false
+): Promise<string> {
   const result = await inquirer.prompt([{
     type: 'password',
     name: 'value',
@@ -65,8 +90,24 @@ export async function password(message: string, defaultValue?: string, required 
     default: defaultValue,
   }]);
 
-  if (!result.value && required) {
+  if (!validator) {
+    return result.value;
+  }
+
+  if (validator === true && !result.value) {
     return await prompt(chalk.red(message), defaultValue, true);
+  }
+
+  if (typeof validator === 'function') {
+    const flag = await validator(result.value);
+    if (flag === false) {
+      print('error', `${result.value} 校验失败，请重新输入！`);
+      return await prompt(chalk.red(message), defaultValue, true);
+    }
+    if (flag instanceof Error) {
+      print('error', flag.message);
+      return await prompt(chalk.red(message), defaultValue, true);
+    }
   }
 
   return result.value;
