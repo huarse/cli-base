@@ -37,9 +37,24 @@ print('debug', 'hello', 'world');
 | templateRender  | 最简单的模板渲染                     | `tpl: string, data: Record<string, any> = {}`                                         | `string`                       |
 | confirm         | node 控制台二次确认                  | `message: string, defaultValue = false`                                               | `Promise<boolean>`             |
 | select          | node 控制台用户选择                  | `message: string, options: SelectOptions[] | string[], defaultValue: string | number` | `Promise<string>`              |
-| input           | node 控制台用户输入                  | `message: string, defaultValue?: string, required = false`                            | `Promise<string>`              |
-| password        | node 控制台密码输入                  | `message: string, defaultValue?: string, required = false`                            | `Promise<string>`              |
+| input           | node 控制台用户输入                  | `message: string, defaultValue?: string, validator = (v: string) => any`              | `Promise<string>`              |
+| password        | node 控制台密码输入                  | `message: string, defaultValue?: string, validator = (v: string) => any`              | `Promise<string>`              |
 | holding         | node 控制台进入等待状态，按回车继续  | `tips = '按回车继续...'`                                                              | `Promise<boolean>`             |
+
+其中 `input` 和 `password` 方法的第 3 个参数是校验方法，入参是输入的值，如果返回 false 或 Error（支持 Promise），则表示校验失败，例如：
+
+```ts
+utils.input('请输入用户名', null, async (value) => {
+  // 直接校验
+  return value === 'zhangsan'; 
+
+  // 返回自定义错误文案
+  return value === 'zhangsan' ? true : new Error('校验失败！');
+
+  // 远程校验
+  return await request(`api/validate?name=${value}`);
+});
+```
 
 #### 扩展的类型定义
 

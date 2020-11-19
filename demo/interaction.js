@@ -9,9 +9,14 @@ const { utils } = require('../lib/index');
 (async function() {
   const name = await utils.input('请输入用户名: ', null, value => {
     // return value === 'moyan';
-    if (value !== 'moyan') {
-      return new Error('不能是其他人！');
-    }
+    // if (value !== 'moyan') {
+    //   return new Error('不能是其他人！');
+    // }
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(value === 'moyan' ? true : new Error('不能是其他人呀！'));
+      }, 500);
+    });
   });
   utils.print('info', '> name: ', name);
 
