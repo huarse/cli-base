@@ -95,18 +95,18 @@ export async function password(
   }
 
   if (validator === true && !result.value) {
-    return await prompt(chalk.red(message), defaultValue, validator);
+    return await password(chalk.red(message), defaultValue, validator);
   }
 
   if (typeof validator === 'function') {
     const flag = await validator(result.value);
     if (flag === false) {
       print('error', `${result.value} 校验失败，请重新输入！`);
-      return await prompt(chalk.red(message), defaultValue, validator);
+      return await password(chalk.red(message), defaultValue, validator);
     }
     if (flag instanceof Error) {
       print('error', flag.message);
-      return await prompt(chalk.red(message), defaultValue, validator);
+      return await password(chalk.red(message), defaultValue, validator);
     }
   }
 

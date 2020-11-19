@@ -20,7 +20,9 @@ const { utils } = require('../lib/index');
   });
   utils.print('info', '> name: ', name);
 
-  const pass = await utils.password('请输入密码', null, true);
+  const pass = await utils.password('请输入密码', null, (value) => {
+    return value === '123456' ? undefined : new Error('密码错误，请重新输入！');
+  });
   utils.print('info', '> password: ', pass);
 
   await utils.holding();
