@@ -1,5 +1,5 @@
 // file clear
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:55
 
 import path from 'path';

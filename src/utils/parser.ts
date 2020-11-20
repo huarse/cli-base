@@ -1,5 +1,5 @@
 // 各种 parser
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:26
 
 import properties from 'properties';

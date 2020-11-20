@@ -1,5 +1,5 @@
 // babel config
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/07/31 09:26
 
 module.exports = {

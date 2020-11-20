@@ -1,5 +1,5 @@
 // logger utils
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:20
 
 import chalk from 'chalk';

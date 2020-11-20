@@ -1,5 +1,5 @@
 // file search
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:56
 
 import fs from 'fs-extra';

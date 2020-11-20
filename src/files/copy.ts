@@ -1,5 +1,5 @@
 // copy files
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:52
 
 import path from 'path';

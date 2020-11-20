@@ -1,5 +1,5 @@
 // utils test
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/07/10 10:27
 
 const { utils } = require('../lib/index');

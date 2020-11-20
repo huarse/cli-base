@@ -28,6 +28,8 @@ test('#util module', () => {
   expect(typeof all.utils.password).toBe('function');
   expect(typeof all.utils.holding).toBe('function');
   expect(typeof all.utils.waiting).toBe('function');
+  expect(typeof all.utils.exec).toBe('function');
+  expect(typeof all.utils.execSync).toBe('function');
 });
 
 test('#const module', () => {

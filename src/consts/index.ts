@@ -1,5 +1,5 @@
 // base consts for cli
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:02
 
 /** 用户目录 */

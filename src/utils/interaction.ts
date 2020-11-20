@@ -1,5 +1,5 @@
 // interaction utils -- 控制台交互方法
-// @author MOYAN <moyan@come-future.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:42
 
 import inquirer from 'inquirer';

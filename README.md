@@ -40,6 +40,8 @@ print('debug', 'hello', 'world');
 | input           | node 控制台用户输入                  | `message: string, defaultValue?: string, validator = (v: string) => any`              | `Promise<string>`              |
 | password        | node 控制台密码输入                  | `message: string, defaultValue?: string, validator = (v: string) => any`              | `Promise<string>`              |
 | holding         | node 控制台进入等待状态，按回车继续  | `tips = '按回车继续...'`                                                              | `Promise<boolean>`             |
+| exec            | 执行 shell 命令，返回执行结果        | `command: string, cwd = process.cwd()`                                                | `Promise<any>`                 |
+| execSync        | 同步执行 shell 命令                  | `command: string, cwd = process.cwd()`                                                | `SpawnSyncReturns`             |
 
 其中 `input` 和 `password` 方法的第 3 个参数是校验方法，入参是输入的值，如果返回 false 或 Error（支持 Promise），则表示校验失败，例如：
 
