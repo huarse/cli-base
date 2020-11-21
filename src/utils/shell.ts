@@ -9,8 +9,8 @@ import spawn from 'cross-spawn';
  * @param command 命令字符，例如 ls -al
  * @param cwd 执行目录（可选），默认是当前 process.cwd()
  */
-export function exec(command: string, cwd: string = process.cwd()) {
-  const cmdList = command.split(' ');
+export function exec(command: string | string[], cwd: string = process.cwd()) {
+  const cmdList = getCmdList(command);
   const first = cmdList.shift();
 
   return new Promise((resolve, reject) => {
@@ -46,8 +46,17 @@ export function exec(command: string, cwd: string = process.cwd()) {
  * @param command 命令字符，例如 ls -al
  * @param cwd 执行目录（可选），默认是当前 process.cwd()
  */
-export function execSync(command: string, cwd: string = process.cwd()) {
-  const cmdList = command.split(' ');
+export function execSync(command: string | string[], cwd: string = process.cwd()) {
+  const cmdList = getCmdList(command);
   const first = cmdList.shift();
   return spawn.sync(first, cmdList, { stdio: 'inherit', cwd });
+}
+
+function getCmdList(command: string | string[]) {
+  if (typeof command === 'string') {
+    return command.split(' ');
+  }
+  if (Array.isArray(command)) {
+    return [...command];
+  }
 }

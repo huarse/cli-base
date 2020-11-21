@@ -130,7 +130,7 @@ interface SelectOptions {
 export async function select(
   message: string,
   options: SelectOptions[] | string[],
-  defaultValue: string | number
+  defaultValue?: string | number
 ): Promise<string> {
   const result = await inquirer.prompt([{
     type: 'list',
