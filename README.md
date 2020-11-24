@@ -31,7 +31,7 @@ print('debug', 'hello', 'world');
 | 方法名          | 描述                                 | 参数定义                                                                              | 返回值                         |
 | --------------- | ------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------ |
 | progressBar     | 返回一个进度条 string                | `recent: number, total?: number, label?: string`                                      | `string`                       |
-| print           | 带颜色级别的 console.log             | `type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]`                  | `void`                         |
+| print           | 带颜色级别的 console.log             | `type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]`                  | `(filepath: string) => any`    |
 | printJSON       | 打印单层的 JSON                      | `json: Record<string, BaseType>`                                                      | `void`                         |
 | parseProperties | 解析 .properties 文件，返回一个 JSON | `file: string`                                                                        | `Promise<Record<string, any>>` |
 | templateRender  | 最简单的模板渲染                     | `tpl: string, data: Record<string, any> = {}`                                         | `string`                       |
@@ -161,6 +161,7 @@ export interface SearchResult {
 - **1.0.0** 发布 1.0 版本，整合并优化 已有能力
 - **1.0.4** 优化文档，迁移代码仓库
 - **1.1.0** 去掉 `BaseAction` ，简化架构
+- **1.1.7** 增强 print 方法，可以将日志输出到本地
 
 ## LICENSE
 
