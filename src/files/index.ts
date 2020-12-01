@@ -1,5 +1,5 @@
 // 文件处理相关的方法
-// @author Pluto <huarse@gmail.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/01/09 20:16
 
 export * from './iterator';

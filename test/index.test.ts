@@ -1,5 +1,5 @@
 // 测试用例
-// @author Pluto <huarse@gmail.com>
+// @author CAIHUAZHI <huarse@gmail.com>
 // @create 2018/05/22
 
 import * as all from '../src';

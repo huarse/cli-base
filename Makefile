@@ -1,5 +1,5 @@
 # ts lib makefile
-# @author Pluto <huarse@gmail.com>
+# @author CAIHUAZHI <huarse@gmail.com>
 # @create 2020/03/30 17:50
 
 .PHONY: run lint clear lib esm dist copy finish

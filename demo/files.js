@@ -30,7 +30,7 @@ async function test() {
   }, null, null);
 
   const result = await findInFolder('./lib', (filePath, fileContent) => {
-    return /Pluto/.test(fileContent);
+    return /CAIHUAZHI/.test(fileContent);
   }, {
     // all: true,
     // include: /index/,
