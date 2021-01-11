@@ -28,20 +28,21 @@ print('debug', 'hello', 'world');
 
 ### 2. utils 一些常用的方法
 
-| 方法名          | 描述                                 | 参数定义                                                                              | 返回值                         |
-| --------------- | ------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------ |
-| progressBar     | 返回一个进度条 string                | `recent: number, total?: number, label?: string`                                      | `string`                       |
-| print           | 带颜色级别的 console.log             | `type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]`                  | `(filepath: string) => any`    |
-| printJSON       | 打印单层的 JSON                      | `json: Record<string, BaseType>`                                                      | `void`                         |
-| parseProperties | 解析 .properties 文件，返回一个 JSON | `file: string`                                                                        | `Promise<Record<string, any>>` |
-| templateRender  | 最简单的模板渲染                     | `tpl: string, data: Record<string, any> = {}`                                         | `string`                       |
-| confirm         | node 控制台二次确认                  | `message: string, defaultValue = false`                                               | `Promise<boolean>`             |
-| select          | node 控制台用户选择                  | `message: string, options: SelectOptions[] | string[], defaultValue: string | number` | `Promise<string>`              |
-| input           | node 控制台用户输入                  | `message: string, defaultValue?: string, validator = (v: string) => any`              | `Promise<string>`              |
-| password        | node 控制台密码输入                  | `message: string, defaultValue?: string, validator = (v: string) => any`              | `Promise<string>`              |
-| holding         | node 控制台进入等待状态，按回车继续  | `tips = '按回车继续...'`                                                              | `Promise<boolean>`             |
-| exec            | 执行 shell 命令，返回执行结果        | `command: string, cwd = process.cwd()`                                                | `Promise<any>`                 |
-| execSync        | 同步执行 shell 命令                  | `command: string, cwd = process.cwd()`                                                | `SpawnSyncReturns`             |
+| 方法名          | 描述                                 | 参数定义                                                                 | 返回值                         |
+| --------------- | ------------------------------------ | ------------------------------------------------------------------------ | ------------------------------ |
+| progressBar     | 返回一个进度条 string                | `recent: number, total?: number, label?: string`                         | `string`                       |
+| print           | 带颜色级别的 console.log             | `type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]`     | `(filepath: string) => any`    |
+| printJSON       | 打印单层的 JSON                      | `json: Record<string, BaseType>`                                         | `void`                         |
+| parseProperties | 解析 .properties 文件，返回一个 JSON | `file: string`                                                           | `Promise<Record<string, any>>` |
+| templateRender  | 最简单的模板渲染                     | `tpl: string, data: Record<string, any> = {}`                            | `string`                       |
+| confirm         | node 控制台二次确认                  | `message: string, defaultValue = false`                                  | `Promise<boolean>`             |
+| select          | node 控制台用户选择                  | `message: string, options: SelectOptions<T>[], defaultValue: T`          | `Promise<T>`                   |
+| multi           | node 控制台用户多选                  | `message: string, options: SelectOptions<T>[], defaultValue: T[]`        | `Promise<T[]>`                 |
+| input           | node 控制台用户输入                  | `message: string, defaultValue?: string, validator = (v: string) => any` | `Promise<string>`              |
+| password        | node 控制台密码输入                  | `message: string, defaultValue?: string, validator = (v: string) => any` | `Promise<string>`              |
+| holding         | node 控制台进入等待状态，按回车继续  | `tips = '按回车继续...'`                                                 | `Promise<boolean>`             |
+| exec            | 执行 shell 命令，返回执行结果        | `command: string, cwd = process.cwd()`                                   | `Promise<any>`                 |
+| execSync        | 同步执行 shell 命令                  | `command: string, cwd = process.cwd()`                                   | `SpawnSyncReturns`             |
 
 其中 `input` 和 `password` 方法的第 3 个参数是校验方法，入参是输入的值，如果返回 false 或 Error（支持 Promise），则表示校验失败，例如：
 
@@ -161,7 +162,8 @@ export interface SearchResult {
 - **1.0.0** 发布 1.0 版本，整合并优化 已有能力
 - **1.0.4** 优化文档，迁移代码仓库
 - **1.1.0** 去掉 `BaseAction` ，简化架构
-- **1.1.7** 增强 print 方法，可以将日志输出到本地
+- **1.1.7** 增强 `util.print` 方法，可以将日志输出到本地
+- **1.1.9** 新增 `util.multi` 方法，可以用于多选
 
 ## LICENSE
 

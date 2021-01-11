@@ -7,6 +7,16 @@
 const { utils } = require('../lib/index');
 
 (async function() {
+  const hobby = await utils.multi('请选择爱好', [
+    { name: '篮球', value: 1001 },
+    { name: '跑步', value: 1002 },
+    { name: '睡觉', value: 1003 },
+    { name: '看书', value: 1004 },
+    { name: '烤肉', value: 1005 },
+  ], [1002, 1004]);
+
+  utils.print('info', '> hobby: ', hobby.join(','));
+
   const name = await utils.input('请输入用户名: ', null, value => {
     // return value === 'moyan';
     // if (value !== 'moyan') {

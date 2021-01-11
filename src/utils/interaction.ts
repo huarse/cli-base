@@ -5,6 +5,7 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { print } from './print';
+import { isNull } from './object';
 
 /**
  * node 控制台二次确认
@@ -113,9 +114,9 @@ export async function password(
   return result.value;
 }
 
-interface SelectOptions {
+export interface SelectOption<T = string> {
   name: string;
-  value: string;
+  value: T;
 }
 
 /**
@@ -123,27 +124,67 @@ interface SelectOptions {
  * @alias check
  * @param message 提示信息
  * @param options 选项
- * @param defaultValue 默认值或默认的选项 index
+ * @param defaultValue 默认值
  * @example
  * const value = await select('请选择性别: ', ['男', '女']);
  */
-export async function select(
+export async function select<T = string>(
   message: string,
-  options: SelectOptions[] | string[],
-  defaultValue?: string | number
-): Promise<string> {
+  options: SelectOption<T>[] | T[],
+  defaultValue?: T,
+): Promise<T> {
+  const defaultIndex = !isNull(defaultValue) ? options.findIndex((item: SelectOption<T> | T) => {
+    if (typeof item === 'object') {
+      return (item as SelectOption<T>).value === defaultValue;
+    }
+
+    return item === defaultValue;
+  }) : null;
+
+
   const result = await inquirer.prompt([{
     type: 'list',
     name: 'value',
     message,
     choices: options,
-    default: defaultValue,
+    default: defaultIndex,
   }]);
 
   return result.value;
 }
 
+/**
+ * @deprecated 请使用 select
+ */
 export const check = select;
+
+/**
+ * node 控制台多选
+ * @param message 提示信息
+ * @param options 选项
+ * @param defaultValue 默认值（列表）
+ */
+export async function multi<T = string>(
+  message: string,
+  options: SelectOption<T>[],
+  defaultValue: T[],
+): Promise<T[]> {
+  const addonOptions = options.map(item => ({
+    ...item,
+    checked: defaultValue.some(value => item.value === value),
+  }));
+
+  const result = await inquirer.prompt([{
+    type: 'checkbox',
+    name: 'value',
+    message,
+    choices: addonOptions,
+  }]);
+
+  return result.value;
+}
+
+export const multiSelect = multi;
 
 /**
  * 进入等待状态，输入回车继续

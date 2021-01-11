@@ -11,6 +11,7 @@ test('#all modules', () => {
 });
 
 test('#util module', () => {
+  expect(typeof all.utils.isNull).toBe('function');
   expect(typeof all.utils.getProgressStr).toBe('function');
   expect(typeof all.utils.progressBar).toBe('function');
   expect(typeof all.utils.logger).toBe('function');
@@ -23,6 +24,8 @@ test('#util module', () => {
   expect(typeof all.utils.confirm).toBe('function');
   expect(typeof all.utils.select).toBe('function');
   expect(typeof all.utils.check).toBe('function');
+  expect(typeof all.utils.multi).toBe('function');
+  expect(typeof all.utils.multiSelect).toBe('function');
   expect(typeof all.utils.prompt).toBe('function');
   expect(typeof all.utils.input).toBe('function');
   expect(typeof all.utils.password).toBe('function');
