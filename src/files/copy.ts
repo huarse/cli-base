@@ -31,7 +31,8 @@ const defaultOptions: OptionShape = {
   dist: null,
   exclude: /node_modules\/|build\/|\.DS_Store\/|\.idea\/|\.paiconfig|\.git\/|\.bak/,
   readonlyFile: /\.(png|jpe?g|gif|svg|obj|mtl|geojson|gltf|mp4|min\.js|min\.css)$/,
-  fileNameTransfer: (name: string) => name.replace(/^__/, '.').replace(/^_/, ''),
+  // fileNameTransfer: (name: string) => name.replace(/^__/, '.').replace(/^_/, ''),
+  fileNameTransfer: (name: string) => name,
 };
 
 /**
