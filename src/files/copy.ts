@@ -29,9 +29,8 @@ export interface OptionShape {
 const defaultOptions: OptionShape = {
   src: null,
   dist: null,
-  exclude: /node_modules\/|build\/|\.DS_Store\/|\.idea\/|\.paiconfig|\.git\/|\.bak/,
-  readonlyFile: /\.(png|jpe?g|gif|svg|obj|mtl|geojson|gltf|mp4|min\.js|min\.css)$/,
-  // fileNameTransfer: (name: string) => name.replace(/^__/, '.').replace(/^_/, ''),
+  exclude: /node_modules\/|build\/|\.DS_Store\/|\.idea\/|\.git\/|\.bak$|\.conf$/,
+  readonlyFile: /\.(png|jpe?g|gif|webp|svg|obj|mtl|geojson|gltf|mp4|mp3|min\.js|min\.css)$/,
   fileNameTransfer: (name: string) => name,
 };
 

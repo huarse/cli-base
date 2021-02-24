@@ -164,6 +164,7 @@ export interface SearchResult {
 - **1.1.0** 去掉 `BaseAction` ，简化架构
 - **1.1.7** 增强 `util.print` 方法，可以将日志输出到本地
 - **1.1.9** 新增 `util.multi` 方法，可以用于多选
+- **1.1.11** 优化 `files.copyDir` 方法，修改默认的配置项
 
 ## LICENSE
 
