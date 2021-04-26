@@ -1,6 +1,6 @@
 {
   "name": "@irim/cli-base",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "Base Module for Command Line Tools",
   "repository": {
     "type": "git",
@@ -40,7 +40,6 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "cross-spawn": "^7.0.3",
-    "dateformat": "^4.5.1",
     "fs-extra": "^9.1.0",
     "inquirer": "^7.3.3",
     "ora": "^5.4.0",

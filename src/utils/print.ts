@@ -4,8 +4,8 @@
 
 import fs from 'fs-extra';
 import chalk from 'chalk';
-import dateformat from 'dateformat';
 import { BaseType } from '../interfaces/types';
+import { timestamp } from './timer';
 
 export function logger (...args: BaseType[]): void {
   // eslint-disable-next-line
@@ -22,7 +22,7 @@ const LOG_TYPES = { 'debug': 'gray', 'info': 'cyan', 'success': 'green', 'warn':
  */
 export function print(type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]): (filepath: string) => any {
   const c = LOG_TYPES[type];
-  const dateStr = dateformat(new Date(), 'HH:MM:ss.l');
+  const dateStr = timestamp(new Date(), 'HH:mm:ss.L');
   logger(chalk.gray(`[${dateStr}]`), ...msgs.map(msg => chalk[c](msg)));
 
   return (filepath: string) => {
