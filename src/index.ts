@@ -2,6 +2,9 @@
 // @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 19:25
 
+import chalk from 'chalk';
+
 export * as consts from './consts';
 export * as utils from './utils';
 export * as files from './files';
+export { chalk };
