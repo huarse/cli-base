@@ -162,9 +162,10 @@ export interface SearchResult {
 - **1.0.0** 发布 1.0 版本，整合并优化 已有能力
 - **1.0.4** 优化文档，迁移代码仓库
 - **1.1.0** 去掉 `BaseAction` ，简化架构
-- **1.1.7** 增强 `util.print` 方法，可以将日志输出到本地
-- **1.1.9** 新增 `util.multi` 方法，可以用于多选
+- **1.1.7** 增强 `utils.print` 方法，可以将日志输出到本地
+- **1.1.9** 新增 `utils.multi` 方法，可以用于多选
 - **1.1.11** 优化 `files.copyDir` 方法，修改默认的配置项
+- **1.1.14** 新增 `utils.promiseTimer` 方法，可以将 promise 方法封装成带超时机制的方法
 
 ## LICENSE
 

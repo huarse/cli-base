@@ -13,11 +13,14 @@ const { utils } = require('../lib/index');
     { name: '睡觉', value: 1003 },
     { name: '看书', value: 1004 },
     { name: '烤肉', value: 1005 },
-  ], [1002, 1004]);
+  ], [1002, 1004], 2000);
 
   utils.print('info', '> hobby: ', hobby.join(','));
 
-  const name = await utils.input('请输入用户名: ', null, value => {
+  const foo = await utils.promiseTimer(utils.input('请输入:', 'foo', true), 1000, (resolve, reject) => reject('zzzz'));
+  console.log('>>> foo', foo);
+
+  const name = await utils.input('请输入用户名: ', 'zhangsan', value => {
     // return value === 'moyan';
     // if (value !== 'moyan') {
     //   return new Error('不能是其他人！');
@@ -27,7 +30,7 @@ const { utils } = require('../lib/index');
         resolve(value === 'moyan' ? true : new Error('不能是其他人呀！'));
       }, 500);
     });
-  });
+  }, 3000);
   utils.print('info', '> name: ', name);
 
   const pass = await utils.password('请输入密码', null, (value) => {

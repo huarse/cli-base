@@ -13,6 +13,34 @@ export function sleep(millseconds: number): Promise<void> {
 }
 
 /**
+ * 将 promise 封装成带超时机制的方法
+ * @param promise
+ * @param timeout 超时时间(ms)
+ * @param handler 超时后的处理方法
+ */
+export function promiseTimer<T>(
+  promise: Promise<T>,
+  timeout: number,
+  handler: (resolve: (value: T) => any, reject?: (reason: any) => any) => void
+): Promise<T> {
+  if (!timeout) return promise;
+
+  let destroyed = false;
+  return new Promise<T>((resolve, reject) => {
+    promise.then(result => {
+      !destroyed && resolve(result);
+    }).catch(error => {
+      !destroyed && reject(error);
+    });
+
+    setTimeout(() => {
+      destroyed = true;
+      handler(resolve, reject);
+    }, timeout);
+  });
+}
+
+/**
  * 格式化的时间戳
  * @param date
  * @param format Y: years, M: month, D: date, H: hours, m: minute, s: seconds
