@@ -27,14 +27,13 @@ export async function confirm(message: string, defaultValue = false): Promise<bo
 
 /**
  * node 控制台用户输入
- * @alias input
  * @param message 提示信息
  * @param defaultValue 默认值
  * @param validator 校验规则，如果是 boolean，则表示必填
  * @example
- * const username = await prompt('请输入用户名：');
+ * const username = await input('请输入用户名：');
  */
-export async function prompt(
+export async function input(
   message: string,
   defaultValue?: string,
   validator: boolean | ((v: string) => (Promise<boolean | Error> | boolean | Error)) = false
@@ -51,25 +50,28 @@ export async function prompt(
   }
 
   if (validator === true && !result.value) {
-    return await prompt(chalk.red(message), defaultValue, validator);
+    return await input(chalk.red(message), defaultValue, validator);
   }
 
   if (typeof validator === 'function') {
     const flag = await validator(result.value);
     if (flag === false) {
       print('error', `${result.value} 校验失败，请重新输入！`);
-      return await prompt(chalk.red(message), defaultValue, validator);
+      return await input(chalk.red(message), defaultValue, validator);
     }
     if (flag instanceof Error) {
       print('error', flag.message);
-      return await prompt(chalk.red(message), defaultValue, validator);
+      return await input(chalk.red(message), defaultValue, validator);
     }
   }
 
   return result.value;
 }
 
-export const input = prompt;
+/**
+ * @deprecated 请使用 input
+ */
+export const prompt = input;
 
 /**
  * node 控制台用户输入
@@ -121,7 +123,6 @@ export interface SelectOption<T = string> {
 
 /**
  * node 控制台用户选择
- * @alias check
  * @param message 提示信息
  * @param options 选项
  * @param defaultValue 默认值
@@ -184,11 +185,13 @@ export async function multi<T = string>(
   return result.value;
 }
 
+/**
+ * @deprecated 请使用 multi
+ */
 export const multiSelect = multi;
 
 /**
  * 进入等待状态，输入回车继续
- * @alias waiting
  * @param tips 提示信息
  */
 export async function holding(tips = '按回车继续...'): Promise<boolean> {
@@ -205,5 +208,6 @@ export async function holding(tips = '按回车继续...'): Promise<boolean> {
 /**
  * 进入等待状态，输入回车继续
  * @param tips 提示信息
+ * @deprecated 请使用 holding
  */
 export const waiting = holding;

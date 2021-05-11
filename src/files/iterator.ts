@@ -41,6 +41,9 @@ export async function fileIterator(
   })(src);
 }
 
+/**
+ * alias of fileIterator
+ */
 export const iterator = fileIterator;
 
 /**
@@ -75,4 +78,7 @@ export async function getFileCount(src: string, exclude?: RegExp): Promise<numbe
   return count;
 }
 
+/**
+ * alias of getFileCount
+ */
 export const count = getFileCount;

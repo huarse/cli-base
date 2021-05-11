@@ -2,15 +2,22 @@
 // @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/07/10 10:27
 
-const { utils } = require('../lib/index');
-
-const { stderr: log } = require('single-line-log');
+const { utils, ora } = require('../lib/index');
 
 let i = 0;
+const spinner = ora(utils.getProgressStr(i, 68, '复制中...')).start();
 const timmer = setInterval(() => {
-  log(utils.getProgressStr(++i, 68, '复制中...'));
+  spinner.text = utils.getProgressStr(++i, 68, '复制中...');
   if (i >= 68) {
     clearInterval(timmer);
-    utils.print('success', '>>>>> 复制完成！！');
+    spinner.succeed(utils.getProgressStr(++i, 68, '复制完成'));
   }
 }, 50);
+
+const tpl = `
+<h1>{{title}}</h1>
+<div>{{info.name}}</div>
+<div>{{info.gender}}</div>
+`;
+
+console.log(utils.render(tpl, { title: 'hello', info: { name: 'zhangsan' } }));

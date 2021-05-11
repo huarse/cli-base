@@ -7,12 +7,11 @@ import { parseValue } from './parser';
 
 /**
  * 返回一个进度条 string
- * @alias progressBar
  * @param recent 当前进度 0 ~ 100
  * @param total 总进度，默认 100
  * @param label prefix
  */
-export function getProgressStr(recent: number, total?: number, label?: string): string {
+export function progressBar(recent: number, total?: number, label?: string): string {
   if (!total && recent <= 1) {
     total = 100;
     recent = Math.round(recent * 100);
@@ -38,16 +37,18 @@ export function getProgressStr(recent: number, total?: number, label?: string): 
   return `${label || 'processing...'} ${bar} ${recent} / ${total} \n`;
 }
 
-export const progressBar = getProgressStr;
+export const getProgressStr = progressBar;
 
 /**
- * 最简单的模板渲染
- * @alias render
- * @param tpl 模板，变量用 {{xxx}}表示
+ * 最简单的模板渲染，仅用于替换字符串中的 {{xxx}}
+ * @param tpl 模板，变量用 {{xxx}}表示, xxx 支持 a.b 的形式
  * @param data 渲染的数据
  */
-export function templateRender(tpl: string, data: Record<string, any> = {}): string {
-  return tpl.replace(/\{\{\s?([a-z_$]+)\s?\}\}/gi, (_, key) => parseValue(data, key));
+export function render(tpl: string, data: Record<string, any> = {}): string {
+  return tpl.replace(/\{\{\s?([a-z_$.]+)\s?\}\}/gi, (_, key) => parseValue(data, key));
 }
 
-export const render = templateRender;
+/**
+ * @deprecated 请使用 render
+ */
+export const templateRender = render;
