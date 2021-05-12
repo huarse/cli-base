@@ -4,7 +4,7 @@
 
 import fs from 'fs-extra';
 import chalk from 'chalk';
-import { BaseType } from '../interfaces/types';
+import { BaseType } from '../interfaces';
 import { timestamp } from './timer';
 
 export function logger (...args: BaseType[]): void {

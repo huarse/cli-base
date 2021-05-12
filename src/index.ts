@@ -8,3 +8,5 @@ export * as files from './files';
 
 export { default as chalk } from 'chalk';
 export { default as ora } from 'ora';
+
+export * from './interfaces';

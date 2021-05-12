@@ -64,11 +64,8 @@ export function timestamp(date: Date | number | string = new Date(), format = 'Y
   const s = `${date.getSeconds()}`;
   const L = `${date.getMilliseconds()}`;
   const YY = Y;
-  const MM = M.padStart(2, '0');
-  const DD = D.padStart(2, '0');
-  const HH = H.padStart(2, '0');
-  const mm = m.padStart(2, '0');
-  const ss = s.padStart(2, '0');
+
+  const [MM, DD, HH, mm, ss] = [M, D, H, m, s].map(x => x.padStart(2, '0'));
   const LLL = L.padStart(3, '0');
 
   const data = { YYYY, YY, Y, MM, M, DD, D, HH, H, mm, m, ss, s, L, LLL };
