@@ -68,7 +68,8 @@ export function timestamp(date: Date | number | string = new Date(), format = 'Y
   const [MM, DD, HH, mm, ss] = [M, D, H, m, s].map(x => x.padStart(2, '0'));
   const LLL = L.padStart(3, '0');
 
-  const data = { YYYY, YY, Y, MM, M, DD, D, HH, H, mm, m, ss, s, L, LLL };
+  // 顺序很重要，优先替换大的
+  const data = { YYYY, YY, MM, DD, HH, mm, LLL, Y, M, D, H, m, ss, s, L };
   return Object.keys(data).reduce((prev, key) => {
     return prev.replace(new RegExp(key, 'g'), data[key]);
   }, format);

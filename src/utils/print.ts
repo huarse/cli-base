@@ -22,7 +22,7 @@ const LOG_TYPES = { 'debug': 'gray', 'info': 'cyan', 'success': 'green', 'warn':
  */
 export function print(type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]): (filepath: string) => any {
   const c = LOG_TYPES[type];
-  const dateStr = timestamp(new Date(), 'HH:mm:ss.L');
+  const dateStr = timestamp(new Date(), 'HH:mm:ss.LLL');
   logger(chalk.gray(`[${dateStr}]`), ...msgs.map(msg => chalk[c](msg)));
 
   return (filepath: string) => {
