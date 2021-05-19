@@ -20,10 +20,10 @@ const LOG_TYPES = { 'debug': 'gray', 'info': 'cyan', 'success': 'green', 'warn':
  * @param msgs 日志内容
  * @return 返回一个方法，可以将当前日志添加到文件中
  */
-export function print(type: 'debug'|'info'|'success'|'warn'|'error', ...msgs: BaseType[]): (filepath: string) => any {
+export function print(type: 'debug'|'info'|'success'|'warn'|'error'|'hidden', ...msgs: BaseType[]): (filepath: string) => any {
   const c = LOG_TYPES[type];
   const dateStr = timestamp(new Date(), 'HH:mm:ss.LLL');
-  logger(chalk.gray(`[${dateStr}]`), ...msgs.map(msg => chalk[c](msg)));
+  c && logger(chalk.gray(`[${dateStr}]`), ...msgs.map(msg => chalk[c](msg)));
 
   return (filepath: string) => {
     fs.appendFileSync(filepath, `[${dateStr}] [${type}] ${msgs.join(' ')}\n`);
