@@ -1,6 +1,6 @@
 {
   "name": "@irim/cli-base",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "Base Module for Command Line Tools",
   "repository": {
     "type": "git",

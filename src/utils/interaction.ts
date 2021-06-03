@@ -168,7 +168,7 @@ export const check = select;
 export async function multi<T = string>(
   message: string,
   options: SelectOption<T>[],
-  defaultValue: T[],
+  defaultValue: T[] = [],
 ): Promise<T[]> {
   const addonOptions = options.map(item => ({
     ...item,
