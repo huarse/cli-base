@@ -23,7 +23,7 @@ export interface OptionShape {
   /** 文件名替换方法 */
   fileNameTransfer?: (name: string) => string;
   /** 文件内容格式化方法 */
-  contentFormatter?: (content: string, src: string) => Promise<string>;
+  contentFormatter?: (content: string, src: string, filename: string) => Promise<string>;
 }
 
 const defaultOptions: OptionShape = {
@@ -74,7 +74,7 @@ export async function copyDir(options: OptionShape): Promise<any> {
       await fs.writeFile(targetFile, fileContent);
     } else if (options.contentFormatter) {
       let fileContent = await fs.readFile(sourceFile, 'utf8');
-      fileContent = await options.contentFormatter(fileContent, sourceFile);
+      fileContent = await options.contentFormatter(fileContent, sourceFile, newFilename);
       await fs.writeFile(targetFile, fileContent);
     } else {
       await fs.copyFile(sourceFile, targetFile);
