@@ -16,8 +16,10 @@ async function demo() {
 
 async function git() {
   execSync('git add .');
-  // execSync('git commit -m "auto commit"');
-  execSync(['git', 'commit', '-m', 'chore: auto commit']);
+  execSync('git commit -m "chore: auto commit"');
+  // execSync('git commit -m \"chore: auto commit\"');
+  // execSync('git commit -m \'chore: auto commit\'');
+  // execSync(['git', 'commit', '-m', 'chore: auto commit']);
 }
 
 // demo();
