@@ -48,8 +48,6 @@ export function exec(command: string | string[], cwd: string = process.cwd()) {
  */
 export function execSync(command: string | string[], cwd: string = process.cwd()) {
   const cmdList = getCmdList(command);
-  console.log('>>> cmdList', cmdList);
-
 
   const first = cmdList.shift();
   return spawn.sync(first, cmdList, { stdio: 'inherit', cwd });
@@ -58,7 +56,6 @@ export function execSync(command: string | string[], cwd: string = process.cwd()
 function getCmdList(command: string | string[]) {
   if (typeof command === 'string') {
     const escapedStr = command.replace(/["']([^"]+)["']/, ($1, $2) => {
-      // console.log('>>>>$1', $1, $2);
       return encodeURIComponent($2);
     });
     return escapedStr.split(' ').map(n => decodeURIComponent(n));
