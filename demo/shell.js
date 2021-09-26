@@ -1,6 +1,6 @@
 'use strict';
 
-const { exec } = require('../lib/utils/shell');
+const { exec, execSync } = require('../lib/utils/shell');
 
 
 async function demo() {
@@ -14,5 +14,12 @@ async function demo() {
   console.log('>>>>>>result', result);
 }
 
+async function git() {
+  execSync('git add .');
+  // execSync('git commit -m "auto commit"');
+  execSync(['git', 'commit', '-m', 'chore: auto commit']);
+}
 
-demo();
+// demo();
+
+git();
