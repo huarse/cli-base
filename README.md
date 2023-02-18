@@ -166,6 +166,7 @@ export interface SearchResult {
 - **1.1.9** 新增 `utils.multi` 方法，可以用于多选
 - **1.1.11** 优化 `files.copyDir` 方法，修改默认的配置项
 - **1.1.14** 新增 `utils.promiseTimer` 方法，可以将 promise 方法封装成带超时机制的方法
+- **1.2.0** 透出 `fs-extra` 以及 d.ts 文件，方便被引用
 
 ## LICENSE
 
