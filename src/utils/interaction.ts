@@ -15,12 +15,14 @@ import { isNull } from './object';
  * const isUpdate = await confirm('请确认是否要升级？');
  */
 export async function confirm(message: string, defaultValue = false): Promise<boolean> {
-  const result = await inquirer.prompt([{
-    type: 'confirm',
-    name: 'value',
-    message,
-    default: defaultValue || false,
-  }]);
+  const result = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'value',
+      message,
+      default: defaultValue || false,
+    },
+  ]);
 
   return result.value;
 }
@@ -36,14 +38,16 @@ export async function confirm(message: string, defaultValue = false): Promise<bo
 export async function input(
   message: string,
   defaultValue?: string,
-  validator: boolean | ((v: string) => (Promise<boolean | Error> | boolean | Error)) = false
+  validator: boolean | ((v: string) => Promise<boolean | Error> | boolean | Error) = false,
 ): Promise<string> {
-  const result = await inquirer.prompt([{
-    type: 'input',
-    name: 'value',
-    message,
-    default: defaultValue,
-  }]);
+  const result = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'value',
+      message,
+      default: defaultValue,
+    },
+  ]);
 
   if (!validator) {
     return result.value;
@@ -84,14 +88,16 @@ export const prompt = input;
 export async function password(
   message: string,
   defaultValue?: string,
-  validator: boolean | ((v: string) => (Promise<boolean | Error> | boolean | Error)) = false
+  validator: boolean | ((v: string) => Promise<boolean | Error> | boolean | Error) = false,
 ): Promise<string> {
-  const result = await inquirer.prompt([{
-    type: 'password',
-    name: 'value',
-    message,
-    default: defaultValue,
-  }]);
+  const result = await inquirer.prompt([
+    {
+      type: 'password',
+      name: 'value',
+      message,
+      default: defaultValue,
+    },
+  ]);
 
   if (!validator) {
     return result.value;
@@ -131,25 +137,28 @@ export interface SelectOption<T = string> {
  */
 export async function select<T = string>(
   message: string,
-  options: SelectOption<T>[] | T[],
+  options: Array<SelectOption<T>> | T[],
   defaultValue?: T,
 ): Promise<T> {
-  const defaultIndex = !isNull(defaultValue) ? options.findIndex((item: SelectOption<T> | T) => {
-    if (typeof item === 'object') {
-      return (item as SelectOption<T>).value === defaultValue;
-    }
+  const defaultIndex = !isNull(defaultValue)
+    ? options.findIndex((item: SelectOption<T> | T) => {
+      if (typeof item === 'object') {
+        return (item as SelectOption<T>).value === defaultValue;
+      }
 
-    return item === defaultValue;
-  }) : null;
+      return item === defaultValue;
+    })
+    : null;
 
-
-  const result = await inquirer.prompt([{
-    type: 'list',
-    name: 'value',
-    message,
-    choices: options,
-    default: defaultIndex,
-  }]);
+  const result = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'value',
+      message,
+      choices: options,
+      default: defaultIndex,
+    },
+  ]);
 
   return result.value;
 }
@@ -167,20 +176,22 @@ export const check = select;
  */
 export async function multi<T = string>(
   message: string,
-  options: SelectOption<T>[],
+  options: Array<SelectOption<T>>,
   defaultValue: T[] = [],
 ): Promise<T[]> {
-  const addonOptions = options.map(item => ({
+  const addonOptions = options.map((item) => ({
     ...item,
-    checked: defaultValue.some(value => item.value === value),
+    checked: defaultValue.some((value) => item.value === value),
   }));
 
-  const result = await inquirer.prompt([{
-    type: 'checkbox',
-    name: 'value',
-    message,
-    choices: addonOptions,
-  }]);
+  const result = await inquirer.prompt([
+    {
+      type: 'checkbox',
+      name: 'value',
+      message,
+      choices: addonOptions,
+    },
+  ]);
 
   return result.value;
 }
@@ -195,12 +206,14 @@ export const multiSelect = multi;
  * @param tips 提示信息
  */
 export async function holding(tips = '按回车继续...'): Promise<boolean> {
-  await inquirer.prompt([{
-    type: 'input',
-    name: 'value',
-    message: tips,
-    prefix: '',
-  }]);
+  await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'value',
+      message: tips,
+      prefix: '',
+    },
+  ]);
 
   return true;
 }

@@ -2,7 +2,7 @@
 // @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:52
 
-import path from 'path';
+import path from 'node:path';
 import fs from 'fs-extra';
 import chalk from 'chalk';
 import ora from 'ora';
@@ -15,7 +15,7 @@ export interface OptionShape {
   /** 目标目录 */
   dist: string;
   /** 文件内容替换规则  */
-  replacer?: { holder: RegExp; value: string }[];
+  replacer?: Array<{ holder: RegExp; value: string }>;
   /** 忽略的文件 */
   exclude?: RegExp;
   /** 只读文件（不读取&替换的文件） */
@@ -40,7 +40,8 @@ const defaultOptions: OptionShape = {
  */
 export async function copyDir(options: OptionShape): Promise<any> {
   options = {
-    ...defaultOptions, ...options,
+    ...defaultOptions,
+    ...options,
   };
 
   if (!options.src || !options.dist) {
@@ -56,32 +57,37 @@ export async function copyDir(options: OptionShape): Promise<any> {
   print('debug', `copy directory: ${options.src} ➡︎ ${options.dist}`);
   const spinner = ora(getProgressStr(tickCount, totalCount, '文件复制中...')).start();
 
-  await dirSyncIterator(options.src, options.dist, async (sourceFile, targetFile) => {
-    const curDistPathList = targetFile.split(path.sep);
-    const newFilename = options.fileNameTransfer(curDistPathList.pop());
-    if (!newFilename) {
-      throw new Error(`${curDistPathList.join(path.sep)} File name conversion failed and returned empty`);
-    }
-    targetFile = path.resolve(curDistPathList.join(path.sep), newFilename);
+  await dirSyncIterator(
+    options.src,
+    options.dist,
+    async (sourceFile, targetFile) => {
+      const curDistPathList = targetFile.split(path.sep);
+      const newFilename = options.fileNameTransfer(curDistPathList.pop());
+      if (!newFilename) {
+        throw new Error(`${curDistPathList.join(path.sep)} File name conversion failed and returned empty`);
+      }
+      targetFile = path.resolve(curDistPathList.join(path.sep), newFilename);
 
-    if (options.readonlyFile.test(sourceFile)) {
-      await fs.copyFile(sourceFile, targetFile);
-    } else if (options.replacer) {
-      let fileContent = await fs.readFile(sourceFile, 'utf8');
-      options.replacer.forEach(x => {
-        fileContent = fileContent.replace(x.holder, x.value);
-      });
-      await fs.writeFile(targetFile, fileContent);
-    } else if (options.contentFormatter) {
-      let fileContent = await fs.readFile(sourceFile, 'utf8');
-      fileContent = await options.contentFormatter(fileContent, sourceFile, newFilename);
-      await fs.writeFile(targetFile, fileContent);
-    } else {
-      await fs.copyFile(sourceFile, targetFile);
-    }
+      if (options.readonlyFile.test(sourceFile)) {
+        await fs.copyFile(sourceFile, targetFile);
+      } else if (options.replacer) {
+        let fileContent = await fs.readFile(sourceFile, 'utf8');
+        options.replacer.forEach((x) => {
+          fileContent = fileContent.replace(x.holder, x.value);
+        });
+        await fs.writeFile(targetFile, fileContent);
+      } else if (options.contentFormatter) {
+        let fileContent = await fs.readFile(sourceFile, 'utf8');
+        fileContent = await options.contentFormatter(fileContent, sourceFile, newFilename);
+        await fs.writeFile(targetFile, fileContent);
+      } else {
+        await fs.copyFile(sourceFile, targetFile);
+      }
 
-    spinner.text = getProgressStr(++tickCount, totalCount, '文件复制中...');
-  }, options.exclude);
+      spinner.text = getProgressStr(++tickCount, totalCount, '文件复制中...');
+    },
+    options.exclude,
+  );
 
   spinner.succeed(chalk.green('文件复制完成!'));
 }

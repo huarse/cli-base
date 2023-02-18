@@ -8,5 +8,6 @@ export * as files from './files';
 
 export { default as chalk } from 'chalk';
 export { default as ora } from 'ora';
+export { default as fsEx } from 'fs-extra';
 
 export * from './interfaces';

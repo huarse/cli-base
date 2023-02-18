@@ -2,7 +2,7 @@
 // @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:55
 
-import path from 'path';
+import path from 'node:path';
 import fs from 'fs-extra';
 import chalk from 'chalk';
 import ora from 'ora';
@@ -39,7 +39,7 @@ export async function clearDir(options: ClearOptions): Promise<boolean> {
   }
 
   const originFileList = await fs.readdir(options.src);
-  const fileList = originFileList.filter(name => {
+  const fileList = originFileList.filter((name) => {
     return options.exclude ? !options.exclude.test(name) : true;
   });
 

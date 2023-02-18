@@ -2,7 +2,7 @@
 // @author CAIHUAZHI <huarse@gmail.com>
 // @create 2020/08/17 20:50
 
-import path from 'path';
+import path from 'node:path';
 import fs from 'fs-extra';
 
 /**
@@ -17,7 +17,7 @@ export async function fileIterator(
   /** 执行到目录时的回调 */
   dirCallback?: (dirRelativePath: string) => any,
   /** 忽略的文件 */
-  exclude?: RegExp
+  exclude?: RegExp,
 ): Promise<any> {
   return await (async function _recur(currSrc: string): Promise<any> {
     const isDirectory = fs.statSync(currSrc).isDirectory();
@@ -57,13 +57,18 @@ export async function dirSyncIterator(
   /** 执行到文件时的回调 */
   callback: (sourceFile: string, targetFile: string) => any,
   /** 忽略的文件 */
-  exclude?: RegExp
+  exclude?: RegExp,
 ): Promise<any> {
-  return fileIterator(source, async (filePath, fileRelativePath) => {
-    await callback(filePath, path.resolve(target, fileRelativePath));
-  }, async (dirRelativePath) => {
-    await fs.ensureDir(path.resolve(target, dirRelativePath));
-  }, exclude);
+  return fileIterator(
+    source,
+    async (filePath, fileRelativePath) => {
+      await callback(filePath, path.resolve(target, fileRelativePath));
+    },
+    async (dirRelativePath) => {
+      await fs.ensureDir(path.resolve(target, dirRelativePath));
+    },
+    exclude,
+  );
 }
 
 /**
